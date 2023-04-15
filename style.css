@@ -5,9 +5,12 @@ body {
     background-color: #333;
     color: aquamarine;
   }
+
+  header  p, .right {
+    color: aquamarine;
+  }
   div.box {
     box-sizing: border-box;
-    color: #333;
   }
   
   /* style the header and footer */
@@ -16,11 +19,18 @@ body {
     color: #fff;
     padding: 1rem;
   }
+h1 {
+  font-size: 4.2rem;
+  animation: flicker 1.5s infinite alternate;  
 
-  h1 {
+}
+
+button {
+  font-size: 2.5rem;
+}
+
+  h1{
     margin: 0;
-    font-size: 4.2rem;
-    animation: flicker 1.5s infinite alternate;  
     color: #fff;
     text-shadow:
       0 0 7px #fff,
@@ -60,41 +70,56 @@ body {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     gap: 1rem;
-    margin: 1rem auto;
-    width: 80%;
   }
   .box {
-    background-color: #fff;
-    border: 2px solid #333;
+    color: #db3eb1;
+    border: 6px solid #db3eb1;
+    filter: drop-shadow(0 0 10px #db3eb1) drop-shadow(0 0 20px #db3eb1) contrast(2) brightness(1);
     border-radius: 0.5rem;
     cursor: pointer;
-    font-size: 1.5rem;
-    height: 4rem;
+    font-size: 2.5rem;
+    height:2.5em;
     text-align: center;
-    width: 4rem;
+    width: 3em;
     margin-top: 1rem;
   }
   
-  .clicked {
-    background-color:#FF3131;
-    color: white;
-    position: relative;
-  }
+
   
+.left {
+  max-width: 30vw;
+}
+
+.message {
+  margin-top: 4em;
+}
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 2rem;
+  }
   .clicked::after {
     content: '';
     display: block;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.8rem;
+    transform: translate(-50%, -60%);
+    font-size: 3rem;
   }
   
+  .grid{
+    display: grid;
+    margin: 1rem auto;
+    width: 90%;
+    grid-template-columns: 1fr 1fr fit-content;
+    grid-template-rows: 16em 1fr;
+  }
   
   .clicked.clicked::after {
     content: attr(data-random);
-    font-size: 1.1rem;
+    font-size: 2rem;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -102,4 +127,32 @@ body {
     color: #fff;
     border-radius: 50%;
   }
+
+  .clicked {
+    background-color:#db3eb1;
+    color: white;
+    border: none;
+    position: relative;
+
+  }
   
+  .button {
+    color: #db3eb1;
+    border: 6px solid #db3eb1;
+    border-radius:15px;
+    padding: 15px 25px;
+    font-size: 30px;
+    font-family: tahoma;
+    letter-spacing:5px;
+    cursor: pointer;
+    font-weight: bold;
+    filter: drop-shadow(0 0 15px #db3eb1) drop-shadow(0 0 50px #db3eb1) contrast(2) brightness(2);
+    transition: .5s;
+    margin-bottom: 1em;
+  }
+  
+  .button:hover {
+    color: black;
+    background-color: #db3eb1;
+    filter: drop-shadow(0 0 20px #db3eb1) contrast(2) brightness(2);
+  }
