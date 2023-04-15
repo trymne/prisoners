@@ -1,0 +1,105 @@
+/* reset default styles for body and div elements */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+    color: aquamarine;
+  }
+  div.box {
+    box-sizing: border-box;
+    color: #333;
+  }
+  
+  /* style the header and footer */
+  header, footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 4.2rem;
+    animation: flicker 1.5s infinite alternate;  
+    color: #fff;
+    text-shadow:
+      0 0 7px #fff,
+      0 0 10px #fff,
+      0 0 21px #fff,
+      0 0 42px #0fa,
+      0 0 82px #0fa,
+      0 0 92px #0fa,
+      0 0 102px #0fa,
+      0 0 151px #0fa;
+  }
+
+  /* Flickering animation */
+  @keyframes flicker {
+      
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+  
+        text-shadow:
+        0 0 4px #fff,
+        0 0 11px #fff,
+        0 0 19px #fff,
+        0 0 40px #0fa,
+        0 0 80px #0fa,
+        0 0 90px #0fa,
+        0 0 100px #0fa,
+        0 0 150px #0fa;
+    
+    }
+    
+    20%, 24%, 55% {        
+        text-shadow: none;
+    }    
+  }
+  
+  /* style the box container and boxes */
+  .container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 1rem;
+    margin: 1rem auto;
+    width: 80%;
+  }
+  .box {
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    height: 4rem;
+    text-align: center;
+    width: 4rem;
+    margin-top: 1rem;
+  }
+  
+  .clicked {
+    background-color:#FF3131;
+    color: white;
+    position: relative;
+  }
+  
+  .clicked::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8rem;
+  }
+  
+  
+  .clicked.clicked::after {
+    content: attr(data-random);
+    font-size: 1.1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 00%);
+    color: #fff;
+    border-radius: 50%;
+  }
+  
