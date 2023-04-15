@@ -4,6 +4,7 @@ const MAX_GUESSES = 50;
 let gameOn = true;
 let prisoner = 1;
 let guesses = MAX_GUESSES;
+let activeSimulation = false;
 
 const guessLeft = document.getElementById("attempts-display");
 const currentPrisoner = document.getElementById("prisoner-display");
@@ -148,6 +149,13 @@ function handleGameWon() {
 
 
 function startSimulation(){
+  activeSimulation = !activeSimulation;
+  
+  if (!activeSimulation) {
+    startButton.innerHTML = 'Start simulation';
+    return;
+  }
+  startButton.innerHTML = 'Pause simulation';
   let prisoner = 1;
   let boxes = document.querySelectorAll('.box');
   guesses = MAX_GUESSES
@@ -157,6 +165,7 @@ function startSimulation(){
   console.log('start')
   let started = false;
   const runSim = setInterval(() => {
+    if(!activeSimulation) clearInterval(runSim);
     num = parseInt(currentBox.innerHTML);
     console.log(num, prisoner);
 
@@ -176,8 +185,8 @@ function startSimulation(){
     currentBox = nextBox;
 
 
-    if(prisoner >= NUM_PRISONERS) clearInterval(runSim);
-  }, 100);
+    if(prisoner >= NUM_PRISONERS +1) clearInterval(runSim);
+  }, 300);
 }
 
 /*
