@@ -83,6 +83,11 @@ button {
     width: 3em;
     margin-top: 1rem;
   }
+
+  .box:hover, .box:focus {
+    background-color: #db3eb1;
+    color: white;
+  }
   
 
   
