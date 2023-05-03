@@ -1,13 +1,37 @@
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+:root {
+  --background: #333;
+  --main-text: aquamarine;
+  --aqua-text-shadow: #0fa;
+  --neo-pink: #db3eb1;
+  --border-1: #052b2f;
+  --border-2: #073438;
+  --border-3: #042d31;
+  --border-4: #2d8c54;
+  --border-5: #673c54;
+  
+}
+
+
 /* reset default styles for body and div elements */
 body {
     margin: 0;
     padding: 0;
-    background-color: #333;
-    color: aquamarine;
+    background-color: var(--background);
+    color: var(--main-text);
+  }
+
+  main {
+    padding-bottom: 2em;
   }
 
   header  p, .right {
-    color: aquamarine;
+    color: var(--main-text);
   }
   div.box {
     box-sizing: border-box;
@@ -15,7 +39,7 @@ body {
   
   /* style the header and footer */
   header, footer {
-    background-color: #333;
+    background-color: var(--background);
     color: #fff;
     padding: 1rem;
   }
@@ -33,14 +57,14 @@ button {
     margin: 0;
     color: #fff;
     text-shadow:
-      0 0 7px #fff,
-      0 0 10px #fff,
-      0 0 21px #fff,
-      0 0 42px #0fa,
-      0 0 82px #0fa,
-      0 0 92px #0fa,
-      0 0 102px #0fa,
-      0 0 151px #0fa;
+      0 0 3px #fff,
+      0 0 5px #fff,
+      0 0 11px #fff,
+      0 0 20px var(--aqua-text-shadow),
+      0 0 32px var(--aqua-text-shadow),
+      0 0 42px var(--aqua-text-shadow),
+      0 0 52px var(--aqua-text-shadow),
+      0 0 71px var(--aqua-text-shadow);
   }
 
   /* Flickering animation */
@@ -52,11 +76,11 @@ button {
         0 0 4px #fff,
         0 0 11px #fff,
         0 0 19px #fff,
-        0 0 40px #0fa,
-        0 0 80px #0fa,
-        0 0 90px #0fa,
-        0 0 100px #0fa,
-        0 0 150px #0fa;
+        0 0 40px var(--aqua-text-shadow),
+        0 0 80px var(--aqua-text-shadow),
+        0 0 90px var(--aqua-text-shadow),
+        0 0 100px var(--aqua-text-shadow),
+        0 0 150px var(--aqua-text-shadow);
     
     }
     
@@ -69,23 +93,64 @@ button {
   .container {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    gap: 1rem;
+    gap: 0.4rem;
+    position: relative;
+    background-color: var(--background);
+    margin-top: 2em;
+    padding: 3em;
   }
+
+  .container::before,
+.container::after {
+  content: "";
+  position: absolute;
+  inset: 0rem;
+  z-index: -1;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    var(--border-3),
+    var(--border-4),
+    var(--border-5),
+    var(--border-4),
+    var(--border-3)
+  );
+  border-radius: inherit;
+  animation: rotation 20s linear infinite;
+}
+
+.card::after {
+  filter: blur(3.5rem);
+}
+
+@keyframes rotation {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+
+.container::after {
+  filter: blur(1.5rem);
+}
+
+
   .box {
-    color: #db3eb1;
-    border: 6px solid #db3eb1;
-    filter: drop-shadow(0 0 10px #db3eb1) drop-shadow(0 0 20px #db3eb1) contrast(2) brightness(1);
+    color: var(--neo-pink);
+    border: 6px solid var(--neo-pink);
+    filter: drop-shadow(0 0 5px var(--neo-pink)) drop-shadow(0 0 10px var(--neo-pink)) contrast(2) brightness(1);
     border-radius: 0.5rem;
     cursor: pointer;
-    font-size: 2.5rem;
-    height:2.5em;
+    font-size: 1rem;
+    height:3em;
     text-align: center;
-    width: 3em;
-    margin-top: 1rem;
+    width: 4em;
+    margin-top: 0.4rem;
   }
 
   .box:hover, .box:focus {
-    background-color: #db3eb1;
+    background-color: var(--neo-pink);
     color: white;
   }
   
@@ -102,7 +167,7 @@ button {
   header {
     display: flex;
     justify-content: space-between;
-    font-size: 2rem;
+    font-size: 1rem;
   }
   .clicked::after {
     content: '';
@@ -116,15 +181,15 @@ button {
   
   .grid{
     display: grid;
-    margin: 1rem auto;
-    width: 90%;
+    margin: 0.4rem auto;
+    max-width: 900px;
     grid-template-columns: 1fr 1fr fit-content;
     grid-template-rows: 16em 1fr;
   }
   
   .clicked.clicked::after {
     content: attr(data-random);
-    font-size: 2rem;
+    font-size: 1rem;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -134,7 +199,7 @@ button {
   }
 
   .clicked {
-    background-color:#db3eb1;
+    background-color:var(--neo-pink);
     color: white;
     border: none;
     position: relative;
@@ -142,8 +207,8 @@ button {
   }
   
   .button {
-    color: #db3eb1;
-    border: 6px solid #db3eb1;
+    color: var(--neo-pink);
+    border: 6px solid var(--neo-pink);
     border-radius:15px;
     padding: 15px 25px;
     font-size: 30px;
@@ -151,13 +216,13 @@ button {
     letter-spacing:5px;
     cursor: pointer;
     font-weight: bold;
-    filter: drop-shadow(0 0 15px #db3eb1) drop-shadow(0 0 50px #db3eb1) contrast(2) brightness(2);
+    filter: drop-shadow(0 0 15px var(--neo-pink)) drop-shadow(0 0 50px var(--neo-pink)) contrast(2) brightness(2);
     transition: .5s;
     margin-bottom: 1em;
   }
   
   .button:hover {
     color: black;
-    background-color: #db3eb1;
-    filter: drop-shadow(0 0 20px #db3eb1) contrast(2) brightness(2);
+    background-color: var(--neo-pink);
+    filter: drop-shadow(0 0 20px var(--neo-pink)) contrast(2) brightness(2);
   }
