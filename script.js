@@ -186,7 +186,7 @@ function startSimulation(){
 
 
     if(prisoner >= NUM_PRISONERS +1) clearInterval(runSim);
-  }, 400);
+  }, 300);
 }
 
 /*
