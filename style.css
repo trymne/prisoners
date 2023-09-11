@@ -217,7 +217,6 @@ button {
     cursor: pointer;
     font-weight: bold;
     filter: drop-shadow(0 0 15px var(--neo-pink)) drop-shadow(0 0 50px var(--neo-pink)) contrast(2) brightness(2);
-    transition: .5s;
     margin-bottom: 1em;
   }
   

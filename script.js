@@ -1,31 +1,48 @@
+//setting up the settings
 const NUM_PRISONERS = 100;
 const MAX_GUESSES = 50;
-
 let gameOn = true;
 let prisoner = 1;
 let guesses = MAX_GUESSES;
 let activeSimulation = false;
 
+//define the game interface
 const guessLeft = document.getElementById("attempts-display");
 const currentPrisoner = document.getElementById("prisoner-display");
 const lastGuess = document.getElementById("last-guess-display");
 
+//Add the start button
 const startButton = document.getElementById('start-simulation');
 startButton.addEventListener('click', startSimulation);
 
-
+//set the html
 guessLeft.innerHTML = `Guesses left: ${guesses}`;
 currentPrisoner.innerHTML = `Current prisoner: ${prisoner}`;
 lastGuess.innerHTML = `Last guess: `;
 
+
+
+//create the boxes
 function createBoxes() {
   const container = document.querySelector(".container");
+  container.innerHTML = '';
   for (let i = 1; i <= NUM_PRISONERS; i++) {
     const box = document.createElement("div");
     box.classList.add("box");
     box.setAttribute("data-number", i);
     box.innerHTML = i;
     container.appendChild(box);
+  }
+}
+
+//assign the numbers to the boxes
+function assignNumbers() {
+  const boxes = document.querySelectorAll(".box");
+  const numbers = shuffleNumbers();
+  console.log(boxes)
+  for (let i = 0; i < NUM_PRISONERS; i++) {
+    const box = boxes[i];
+    box.setAttribute("data-random", numbers[i]);
   }
 }
 
@@ -41,14 +58,7 @@ function shuffleNumbers() {
   return numbers;
 }
 
-function assignNumbers() {
-  const boxes = document.querySelectorAll(".box");
-  const numbers = shuffleNumbers();
-  for (let i = 0; i < NUM_PRISONERS; i++) {
-    const box = boxes[i];
-    box.setAttribute("data-random", numbers[i]);
-  }
-}
+
 
 function revealIndexes() {
   const boxes = document.querySelectorAll(".box");
@@ -91,20 +101,21 @@ function boxClick(e) {
   guessLeft.innerHTML = `Guesses left: ${guesses}`;
 
   if (guesses == 0) {
-    handleWrongGuess();
+    resetSimulation()
+    handleGameLoss();
     gameOn = false;
+    
   }
 }
 
 function handleGuess(box) {
   guesses--;
-  const boxNumber = box.getAttribute("data-number");
   const randomNumber = box.getAttribute("data-random");
 
   if (randomNumber === prisoner.toString()) {
     handleCorrectGuess();
   } else if (guesses === 0) {
-    handleWrongGuess(box);
+    handleGameLoss(box);
   } else {
     handleIncorrectGuess(box);
   }
@@ -132,7 +143,7 @@ function handleIncorrectGuess(box) {
   lastGuess.innerHTML = `Last guess: ${box.innerHTML}`;
 }
 
-function handleWrongGuess() {
+function handleGameLoss() {
   alert('Game over, you lose');
   const message = document.getElementById("message");
   message.innerHTML = "Game over, you lose.";
@@ -147,30 +158,43 @@ function handleGameWon() {
   message.innerHTML = "Congratulations, you win!";
 }
 
+//used to reset the game
+function resetSimulation() {
+  currentPrisoner.innerHTML = `Current prisoner: 1`;
+  let boxes = document.querySelectorAll('.box');
+  guessLeft.innerHTML = `Guesses left: 50`;
+  resetBoxes(boxes);
+}
+
 
 function startSimulation(){
   activeSimulation = !activeSimulation;
   
   if (!activeSimulation) {
     startButton.innerHTML = 'Start simulation';
+    resetSimulation()
     return;
   }
-  startButton.innerHTML = 'Pause simulation';
+
+  //setting all parameters back to default
+  startButton.innerHTML = 'Stop simulation';
   let prisoner = 1;
-  let boxes = document.querySelectorAll('.box');
-  guesses = MAX_GUESSES
-  guessLeft.innerHTML = `Guesses left: ${guesses}`;;
   let currentBox = getCurrentBox(prisoner);
-  resetBoxes(boxes);
-  console.log('start')
+  resetSimulation()
+
   let started = false;
+
+  //run the simulation
   const runSim = setInterval(() => {
     if(!activeSimulation) clearInterval(runSim);
     num = parseInt(currentBox.innerHTML);
     console.log(num, prisoner);
 
     if (prisoner === num && started === true) {
-      if(prisoner === 100) handleGameWon();
+      if(prisoner === 100) {
+        handleGameWon();
+        return
+      }
       prisoner ++;
       currentBox = document.querySelector(`.box[data-number="${prisoner}"]`);
       SimCorrectGuess();
@@ -239,6 +263,7 @@ function startSimulation(){
         box.classList.remove('clicked', 'wrong', 'correct');
         box.innerHTML = box.getAttribute('data-number');
       });
+      assignNumbers();
     }
     
     function getCurrentBox(prisoner) {
